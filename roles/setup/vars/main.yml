@@ -1,0 +1,68 @@
+---
+# applications to install
+general:
+  local_home: "{{ lookup('env','HOME') }}"
+
+# homebrew applications
+applications:
+  - git
+  - tree
+  - curl
+  - wget
+  - vim
+  - go
+  - pass
+  - pass-update
+  - gnupg
+  - gnuplot
+  - weechat
+  - tmux
+  - scala
+  - openjdk
+  - fish
+  - mysql
+  - jq
+  - gradle
+  - pinentry
+  - pinentry-mac
+  - node
+  - ruby
+  - spellcheck
+  - sbt
+
+cask_applications:
+  - google-chrome
+  - firefox
+  - microsoft-edge
+  - brave-browser
+  - kitty
+  - visual-studio-code
+  - intellij-idea-ce
+  - zoomus
+  - notion
+  - whatsapp
+  - android-studio
+  - telegram
+  - mathpix-snipping-tool
+  - vlc
+  - postman
+  - arduino
+  - sublime-text
+  - gopass-ui
+  - qutebrowser
+  - docker
+  - keka
+  - spotify
+  - lyricsx
+  - krita
+  - hex-fiend
+
+external_binaries:
+  utorrent:
+    name: utorrent
+    url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
+    dest: "{{general.local_home}}/Downloads/uTorrentWeb.dmg"
+  sendtokindle:
+    name: sendtokindle
+    url: https://s3.amazonaws.com/sendtokindle/SendToKindleForMac-installer.pkg
+    dest: "{{general.local_home}}/Downloads/SendToKindleForMac-installer.pkg"

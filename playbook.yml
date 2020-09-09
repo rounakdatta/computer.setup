@@ -1,0 +1,5 @@
+---
+# playbook for setting up a development mac
+- hosts: mac
+  roles:
+    - setup
