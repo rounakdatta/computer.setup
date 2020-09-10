@@ -31,5 +31,5 @@
 
 - name: start installing Mac App Store applications
   mas_installed_apps:
-    - { id: {{ item.value.id }}, name: "{{ item.value.name }}" }
+    - { id: "{{ item.value.id | int }}", name: "{{ item.value.name }}" }
   with_dict: "{{ mac_app_store_applications }}"
