@@ -24,3 +24,5 @@ main() {
     setup_prerequisites
     start_install
 }
+
+main
