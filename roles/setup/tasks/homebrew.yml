@@ -10,10 +10,6 @@
     state: latest
     update_homebrew: yes
 
-- name: tap homebrew caskroom/cask
-  homebrew_tap:
-    tap: "caskroom/cask"
-
 - name: tap homebrew simplydanny/pass-extensions
   homebrew_tap:
     tap: "simplydanny/pass-extensions"
