@@ -1,0 +1,27 @@
+---
+# install .pkg packages
+- name: check if already application installed
+  local_action: stat path=/Applications/{{ appName }}.app
+  register: app_exists
+
+- name: make sure Applications directory exists
+  command: mkdir -p /Applications/
+  when: app_exists.stat.exists == False
+
+- name: create a temporary directory to hold the package
+  command: mkdir -p ./tmp/`
+  when: app_exists.stat.exists == False
+
+- name: download the package
+  get_url:
+    url: "{{ downloadURL }}"
+    dest: "/tmp/{{ appName }}.dmg"
+  when: app_exists.stat.exists == False
+
+- name: install the package
+  command: installer -pkg ./tmp/{{ appName }}.pkg -target /Applications/
+  when: app_exists.stat.exists == False
+
+- name: clean the temporary directory
+  command: rm -R ./tmp/
+  when: app_exists.stat.exists == False

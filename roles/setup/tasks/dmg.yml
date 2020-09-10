@@ -1,0 +1,36 @@
+---
+# install .dmg packages
+# thanks sandstorm/macosx-with-ansible
+- name: check if already application installed
+  local_action: stat path=/Applications/{{ appName }}.app
+  register: app_exists
+
+- name: make sure Applications directory exists
+  command: mkdir -p /Applications/
+  when: app_exists.stat.exists == False
+
+- name: create a temporary directory to hold the package
+  command: mkdir -p ./tmp/
+  when: app_exists.stat.exists == False
+
+- name: download the package
+  get_url:
+    url: "{{ downloadURL }}"
+    dest: "/tmp/{{ appName }}.dmg"
+  when: app_exists.stat.exists == False
+
+- name: mount the package
+  command: hdiutil attach ./tmp/{{ appName }}.dmg -nobrowse -mountpoint ./tmp/{{ appName }}
+  when: app_exists.stat.exists == False
+
+- name: copy the package to the install directory
+  shell: cp -aR ./tmp/{{ appName }}/*.app /Applications/{{ appName }}.app
+  when: app_exists.stat.exists == False
+
+- name: unmount the package
+  command: hdiutil detach ./tmp/{{ appName }}/
+  when: app_exists.stat.exists == False
+
+- name: clean the temporary directory
+  command: rm -R ./tmp/
+  when: app_exists.stat.exists == False

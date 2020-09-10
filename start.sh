@@ -1,11 +1,6 @@
 #!/bin/bash
 
 setup_prerequisites() {
-    if brew --version; then
-        echo "installing homebrew"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    fi
-
     if pip3 --version; then
         echo "installing pip3"
         sudo easy_install pip3
@@ -21,6 +16,7 @@ start_install() {
     git clone https://github.com/rounakdatta/computer.setup.git $setupdir
 
     cd $setupdir || exit 1
+    ansible-galaxy install -r requirements.yml
     ansible-playbook -i ./hosts playbook.yml --verbose
 }
 

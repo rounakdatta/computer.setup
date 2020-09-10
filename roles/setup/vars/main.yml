@@ -3,7 +3,12 @@
 general:
   local_home: "{{ lookup('env','HOME') }}"
 
-# homebrew applications
+homebrewbrew_taps:
+  spacemacs:
+    tap_repo: "d12frosted/emacs-plus"
+  passExtensions:
+    tap_repo: "simplydanny/pass-extensions"
+
 applications:
   - git
   - tree
@@ -58,12 +63,29 @@ cask_applications:
   - krita
   - hex-fiend
 
-external_applications:
+external_applications_dmg:
   utorrent:
-    name: utorrent
+    name: uTorrentWeb
     url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
-    dest: "{{general.local_home}}/Downloads/uTorrentWeb.dmg"
-  sendtokindle:
-    name: sendtokindle
+
+external_applications_pkg:
+  sendToKindle:
+    name: SendToKindleForMac-installer
     url: https://s3.amazonaws.com/sendtokindle/SendToKindleForMac-installer.pkg
-    dest: "{{general.local_home}}/Downloads/SendToKindleForMac-installer.pkg"
+
+mac_app_store_applications:
+  xcode:
+    id: 497799835
+    name: "Xcode (11.7)"
+  bandwidthPlus:
+    id: 490461369
+    name: "Bandwidth+ (1.18)"
+  lyricsx:
+    id: 1254743014
+    name: "LyricsX (1.5.4)"
+  readingQueue:
+    id: 1476177064
+    name: "Reading Queue (1.2.1)"
+  poolSideFm:
+    id: 1514817810
+    name: "Poolside FM (1.1.2)"

@@ -1,22 +1,35 @@
 ---
 # make sure homebrew is installed, update brew and install applications
-- name: application installs
+- name: setup homebrew
   include: homebrew.yml
 
 - name: start installing homebrew applications
   homebrew:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: latest
-  with_items: "{{applications}}"
+  with_items: "{{ applications }}"
 
 - name: start installing homebrew cask applications
   homebrew_cask:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: present
-  with_items: "{{cask_applications}}"
+  with_items: "{{ cask_applications }}"
 
-- name: start installing external applications
-  get_url:
-    url: "{{item.value.url}}"
-    dest: "{{item.value.dest}}"
-  with_dict: "{{external_applications}}"
+- name: start downloading and installing external applications (dmg)
+  include: dmg.yml
+  vars:
+    downloadURL: "{{ item.value.url }}"
+    appName: "{{ item.value.name }}"
+  with_dict: "{{ external_applications_dmg }}"
+
+- name: start downloading and installing external applications (pkg)
+  include: pkg.yml
+  vars:
+    downloadURL: "{{ item.value.url }}"
+    appName: "{{ item.value.name }}"
+  with_dict: "{{ external_applications_pkg }}"
+
+- name: start installing Mac App Store applications
+  mas_installed_apps:
+    - { id: {{ item.value.id }}, name: "{{ item.value.name }}" }
+  with_dict: "{{ mac_app_store_applications }}"

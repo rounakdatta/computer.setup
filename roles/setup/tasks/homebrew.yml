@@ -1,5 +1,5 @@
 ---
-# install and update homebrew and cask -> open some taps
+# setup homebrew and open the taps
 - name: install homebrew
   shell: 'yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
   args:
@@ -10,12 +10,8 @@
     state: latest
     update_homebrew: yes
 
-- name: tap homebrew simplydanny/pass-extensions
+- name: opening the taps
   homebrew_tap:
-    tap: "simplydanny/pass-extensions"
+    tap: "{{ item.value.tap_repo }}"
     state: present
-
-- name: tap homebrew d12frosted/emacs-plus
-  homebrew_tap:
-    tap: "d12frosted/emacs-plus"
-    state: present
+  with_dict: "{{ homebrew_taps }}"
