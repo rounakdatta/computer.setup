@@ -1,6 +1,5 @@
 ---
 # make sure homebrew is installed, update brew and install applications
-
 - name: application installs
   include: homebrew.yml
 
@@ -16,8 +15,8 @@
     state: present
   with_items: "{{cask_applications}}"
 
-- name: getting external binaries
+- name: start installing external applications
   get_url:
     url: "{{item.value.url}}"
     dest: "{{item.value.dest}}"
-  with_dict: "{{external_binaries}}"
+  with_dict: "{{external_applications}}"

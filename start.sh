@@ -1,8 +1,7 @@
 #!/bin/bash
 
 setup_prerequisites() {
-    pip3 --version
-    if [ $? -ne 0 ]; then
+    if pip3 --version; then
         echo "installing pip3"
         sudo easy_install pip3
     fi

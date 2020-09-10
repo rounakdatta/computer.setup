@@ -57,7 +57,7 @@ cask_applications:
   - krita
   - hex-fiend
 
-external_binaries:
+external_applications:
   utorrent:
     name: utorrent
     url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
