@@ -29,6 +29,7 @@ applications:
   - ruby
   - spellcheck
   - sbt
+  - emacs-plus
 
 cask_applications:
   - google-chrome

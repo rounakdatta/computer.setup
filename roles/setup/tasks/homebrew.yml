@@ -18,3 +18,8 @@
   homebrew_tap:
     tap: "simplydanny/pass-extensions"
     state: present
+
+- name: tap homebrew d12frosted/emacs-plus
+  homebrew_tap:
+    tap: "d12frosted/emacs-plus"
+    state: present
