@@ -1,6 +1,11 @@
 #!/bin/bash
 
 setup_prerequisites() {
+    if brew --version; then
+        echo "installing homebrew"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    fi
+
     if pip3 --version; then
         echo "installing pip3"
         sudo easy_install pip3

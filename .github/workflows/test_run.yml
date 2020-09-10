@@ -24,4 +24,4 @@ jobs:
 
       # Run the entire setup on the test container
       - name: Run a one-line script
-        run: bash start.sh
+        run: curl -s https://raw.githubusercontent.com/daemonza/setupmac/master/start.sh | /bin/bash
