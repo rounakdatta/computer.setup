@@ -3,7 +3,7 @@
 general:
   local_home: "{{ lookup('env','HOME') }}"
 
-homebrewbrew_taps:
+homebrew_taps:
   spacemacs:
     tap_repo: "d12frosted/emacs-plus"
   passExtensions:
@@ -32,7 +32,6 @@ applications:
   - pinentry-mac
   - node
   - ruby
-  - spellcheck
   - sbt
   - emacs-plus
 
@@ -73,19 +72,9 @@ external_applications_pkg:
     name: SendToKindleForMac-installer
     url: https://s3.amazonaws.com/sendtokindle/SendToKindleForMac-installer.pkg
 
-mac_app_store_applications:
-  xcode:
-    id: 497799835
-    name: "Xcode (11.7)"
-  bandwidthPlus:
-    id: 490461369
-    name: "Bandwidth+ (1.18)"
-  lyricsx:
-    id: 1254743014
-    name: "LyricsX (1.5.4)"
-  readingQueue:
-    id: 1476177064
-    name: "Reading Queue (1.2.1)"
-  poolSideFm:
-    id: 1514817810
-    name: "Poolside FM (1.1.2)"
+mas_installed_apps:
+  - { id: 497799835, name: "Xcode (11.7)" }
+  - { id: 490461369, name: "Bandwidth+ (1.18)" }
+  - { id: 1254743014, name: "LyricsX (1.5.4)" }
+  - { id: 1476177064, name: "Reading Queue (1.2.1)" }
+  - { id: 1514817810, name: "Poolside FM (1.1.2)" }

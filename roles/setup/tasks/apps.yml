@@ -13,6 +13,7 @@
   homebrew_cask:
     name: "{{ item }}"
     state: present
+    accept_external_apps: yes
   with_items: "{{ cask_applications }}"
 
 - name: start downloading and installing external applications (dmg)
@@ -28,8 +29,3 @@
     downloadURL: "{{ item.value.url }}"
     appName: "{{ item.value.name }}"
   with_dict: "{{ external_applications_pkg }}"
-
-- name: start installing Mac App Store applications
-  mas_installed_apps:
-    - { id: "{{ item.value.id | int }}", name: "{{ item.value.name }}" }
-  with_dict: "{{ mac_app_store_applications }}"
