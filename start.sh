@@ -1,27 +1,35 @@
 #!/bin/bash
 
 setup_prerequisites() {
-    if pip3 --version; then
+    if ! pip3 --version; then
         echo "installing pip3"
         sudo easy_install pip3
     fi
 
-    echo "installing ansible through pip3"
-    pip3 install ansible
+    if ! ansible --version; then
+        echo "installing ansible through pip3"
+        pip3 install ansible
+    fi
 }
 
-start_install() {
+get_artifacts() {
     setupdir="/tmp/computer.setup.$RANDOM"
     mkdir -p $setupdir
     git clone https://github.com/rounakdatta/computer.setup.git $setupdir
 
     cd $setupdir || exit 1
+}
+
+start_install() {
     ansible-galaxy install -r requirements.yml
     ansible-playbook -i ./hosts playbook.yml --verbose
 }
 
 main() {
     setup_prerequisites
+    if ! basename `git rev-parse --show-toplevel`; then
+        get_artifacts
+    fi
     start_install
 }
 

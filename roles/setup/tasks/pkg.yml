@@ -1,5 +1,6 @@
 ---
 # install .pkg packages
+# todo: installer demands sudo, and there are issues with this therefore
 - name: check if already application installed
   local_action: stat path=/Applications/{{ appName }}.app
   register: app_exists
@@ -15,7 +16,7 @@
 - name: download the package
   get_url:
     url: "{{ downloadURL }}"
-    dest: "/tmp/{{ appName }}.dmg"
+    dest: "./tmp/{{ appName }}.pkg"
   when: app_exists.stat.exists == False
 
 - name: install the package

@@ -16,7 +16,7 @@
 - name: download the package
   get_url:
     url: "{{ downloadURL }}"
-    dest: "/tmp/{{ appName }}.dmg"
+    dest: "./tmp/{{ appName }}.dmg"
   when: app_exists.stat.exists == False
 
 - name: mount the package

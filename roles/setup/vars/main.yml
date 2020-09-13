@@ -9,7 +9,7 @@ homebrew_taps:
   passExtensions:
     tap_repo: "simplydanny/pass-extensions"
 
-applications:
+homebrew_applications:
   - git
   - tree
   - curl
@@ -34,8 +34,9 @@ applications:
   - ruby
   - sbt
   - emacs-plus
+  - shellcheck
 
-cask_applications:
+homebrew_cask_applications:
   - google-chrome
   - firefox
   - microsoft-edge
@@ -61,16 +62,15 @@ cask_applications:
   - lyricsx
   - krita
   - hex-fiend
+  - send-to-kindle
+  - anki
 
 external_applications_dmg:
   utorrent:
     name: uTorrentWeb
     url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
 
-external_applications_pkg:
-  sendToKindle:
-    name: SendToKindleForMac-installer
-    url: https://s3.amazonaws.com/sendtokindle/SendToKindleForMac-installer.pkg
+external_applications_pkg: {}
 
 mas_installed_apps:
   - { id: 497799835, name: "Xcode (11.7)" }

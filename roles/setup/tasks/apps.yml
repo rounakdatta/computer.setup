@@ -5,16 +5,14 @@
 
 - name: start installing homebrew applications
   homebrew:
-    name: "{{ item }}"
+    name: "{{ homebrew_applications }}"
     state: latest
-  with_items: "{{ applications }}"
 
 - name: start installing homebrew cask applications
   homebrew_cask:
-    name: "{{ item }}"
+    name: "{{ homebrew_cask_applications }}"
     state: present
     accept_external_apps: yes
-  with_items: "{{ cask_applications }}"
 
 - name: start downloading and installing external applications (dmg)
   include: dmg.yml
