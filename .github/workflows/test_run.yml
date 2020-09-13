@@ -23,5 +23,5 @@ jobs:
       - uses: actions/checkout@v2
 
       # Run the entire setup on the test container
-      - name: Run a one-line script
-        run: curl -s https://raw.githubusercontent.com/rounakdatta/computer.setup/master/start.sh | /bin/bash
+      - name: Dry run to check the validity of the playbook
+        run: /bin/bash start.sh test

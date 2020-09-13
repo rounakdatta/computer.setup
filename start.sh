@@ -25,12 +25,23 @@ start_install() {
     ansible-playbook -i ./hosts playbook.yml --verbose
 }
 
+dry_run() {
+    ansible-galaxy install -r requirements.yml
+    ansible-playbook -i ./hosts playbook.yml --check
+}
+
 main() {
     setup_prerequisites
     if [[ $(basename `git rev-parse --show-toplevel`) != "computer.setup" ]]; then
         get_artifacts
     fi
-    start_install
+    if [ -z "$1" ]; then
+        echo "starting installation"
+        start_install
+    else
+        echo "testing dry run"
+        dry_run
+    fi
 }
 
-main
+main "$1"
