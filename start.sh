@@ -27,7 +27,7 @@ start_install() {
 
 main() {
     setup_prerequisites
-    if ! basename `git rev-parse --show-toplevel`; then
+    if [[ $(basename `git rev-parse --show-toplevel`) != "computer.setup" ]]; then
         get_artifacts
     fi
     start_install
