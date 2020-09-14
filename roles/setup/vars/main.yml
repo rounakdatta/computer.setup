@@ -8,6 +8,8 @@ homebrew_taps:
     tap_repo: "d12frosted/emacs-plus"
   passExtensions:
     tap_repo: "simplydanny/pass-extensions"
+  openjdk:
+    tap_repo: "adoptopenjdk/openjdk"
 
 homebrew_applications:
   - git
@@ -23,7 +25,6 @@ homebrew_applications:
   - weechat
   - tmux
   - scala
-  - openjdk
   - fish
   - mysql
   - jq
@@ -38,6 +39,7 @@ homebrew_applications:
   - forticlient
 
 homebrew_cask_applications:
+  - adoptopenjdk8
   - google-chrome
   - firefox
   - microsoft-edge
