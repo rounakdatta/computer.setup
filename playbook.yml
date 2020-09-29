@@ -1,6 +1,9 @@
 ---
 # playbook for setting up a development mac
 - hosts: mac
+  vars_files:
+    - config.yml
   roles:
     - setup
     - geerlingguy.mas
+    - geerlingguy.dotfiles

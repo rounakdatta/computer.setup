@@ -1,0 +1,17 @@
+---
+# all the global config vars
+dotfiles_repo: "https://github.com/rounakdatta/dotfiles.git"
+dotfiles_repo_version: master
+
+dotfiles_repo_local_destination: "~/tooling/dotfiles"
+dotfiles_home: "~"
+dotfiles_files:
+  - .macos
+  - .vimrc
+  - .gitconfig
+  - .tmux/base16.sh
+  - .tmux.conf
+  - .config/fish/functions/fish_prompt.fish
+  - .config/fish/config.fish
+  - .config/fish/fish_variables
+  - .config/kitty/kitty.conf

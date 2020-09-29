@@ -36,7 +36,6 @@ homebrew_applications:
   - sbt
   - emacs-plus
   - shellcheck
-  - forticlient
 
 homebrew_cask_applications:
   - adoptopenjdk8
@@ -67,6 +66,8 @@ homebrew_cask_applications:
   - hex-fiend
   - send-to-kindle
   - anki
+  - forticlient
+  - microsoft-office
 
 external_applications_dmg:
   utorrent:
