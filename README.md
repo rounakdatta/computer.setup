@@ -10,10 +10,11 @@ curl -s https://raw.githubusercontent.com/rounakdatta/computer.setup/master/star
 #### Support & Info
 This playbook sets up and uses homebrew for the application installations. Tested to be working on macOS and Linux.
 
-Application support is as:
+Capability & support is as:
 - [x] homebrew CLI applications
 - [x] homebrew cask applications
 - [x] homebrew applications with custom taps
 - [x] external DMGs
 - [ ] external PKGs (implemented but [buggy](https://github.com/rounakdatta/computer.setup/issues/1))
 - [x] App Store applications (through [mas](https://github.com/geerlingguy/ansible-role-mas))
+- [x] Symlinking custom dotfiles from a repository

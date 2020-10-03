@@ -18,6 +18,7 @@
     url: "{{ downloadURL }}"
     dest: "./tmp/{{ appName }}.dmg"
   when: app_exists.stat.exists == False
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: mount the package
   command: hdiutil attach ./tmp/{{ appName }}.dmg -nobrowse -mountpoint ./tmp/{{ appName }}
