@@ -27,8 +27,8 @@ start_install() {
 
 dry_run() {
     ansible-galaxy install -r requirements.yml
-    sed '/geerlingguy.mas/d' playbook.yml > playbook.yml
-    ansible-playbook -i ./hosts playbook.yml --check
+    sed '/geerlingguy.mas/d' playbook.yml > playbook.check.yml
+    ansible-playbook -i ./hosts playbook.check.yml --check
 }
 
 main() {
