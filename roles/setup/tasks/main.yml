@@ -1,4 +1,8 @@
 ---
 # main tree
-- name: application installs
+- name: application installation
   include: apps.yml
+
+# manual installs
+- name: emacs installation
+  include: emacs.yml

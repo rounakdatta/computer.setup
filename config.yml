@@ -2,6 +2,7 @@
 # all the global config vars
 dotfiles_repo: "https://github.com/rounakdatta/dotfiles.git"
 dotfiles_repo_version: master
+dotfiles_repo_clone_recursive: true
 
 dotfiles_repo_local_destination: "~/tooling/dotfiles"
 dotfiles_home: "~"
