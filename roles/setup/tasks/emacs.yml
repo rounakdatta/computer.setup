@@ -3,7 +3,6 @@
 - name: checks if ~/.emacs.d is already present
   stat: path=~/.emacs.d
   register: emacsroot
-  when: emacsroot.stat.isdir is defined and emacsroot.stat.isdir
 
 - name: checks out from git
   command: git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
@@ -11,3 +10,4 @@
 
 - name: installs doom emacs
   command: ~/.emacs.d/bin/doom install
+  when: emacsroot.stat.exists == False
