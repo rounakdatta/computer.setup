@@ -16,3 +16,7 @@ dotfiles_files:
   - .config/fish/config.fish
   - .config/fish/fish_variables
   - .config/kitty/kitty.conf
+  - .config/karabiner/karabiner.json
+  - .doom.d/init.el
+  - .doom.d/config.el
+  - .doom.d/packages.el
