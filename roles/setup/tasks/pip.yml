@@ -1,0 +1,5 @@
+---
+# installs pip-managed python pacakges
+- name: install the package
+  pip:
+    name: "{{ appName }}"

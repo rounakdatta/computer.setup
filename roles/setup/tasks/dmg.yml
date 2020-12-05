@@ -24,14 +24,29 @@
   command: hdiutil attach ./tmp/{{ appName }}.dmg -nobrowse -mountpoint ./tmp/{{ appName }}
   when: app_exists.stat.exists == False
 
+- name: check if it's actually a DMG-archived PKG
+  find:
+    paths: tmp/{{ appName }}
+    patterns: "*.pkg"
+  register: pkg_in_disguise
+
+- name: install the pkg file
+  block:
+    - name: run the installer to install in Applications directory
+      shell: installer -pkg ./tmp/{{ item.path }} -target /Applications/
+      ignore_errors: True
+      loop: "{{ pkg_in_disguise.files }}"
+  when: app_exists.stat.exists == False and pkg_in_disguise.matched != 0
+  become: True
+
 - name: copy the package to the install directory
   shell: cp -aR ./tmp/{{ appName }}/*.app /Applications/{{ appName }}.app
-  when: app_exists.stat.exists == False
+  when: app_exists.stat.exists == False and pkg_in_disguise.matched == 0
 
 - name: unmount the package
   command: hdiutil detach ./tmp/{{ appName }}/
-  when: app_exists.stat.exists == False
+  when: app_exists.stat.exists == False and pkg_in_disguise.matched == 0
 
 - name: clean the temporary directory
   command: rm -R ./tmp/
-  when: app_exists.stat.exists == False
+  when: app_exists.stat.exists == False and pkg_in_disguise.matched == 0

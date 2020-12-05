@@ -22,7 +22,7 @@ get_artifacts() {
 
 start_install() {
     ansible-galaxy install -r requirements.yml
-    ansible-playbook -i ./hosts playbook.yml --verbose
+    ansible-playbook --ask-become-pass -i ./hosts playbook.yml --verbose
 }
 
 dry_run() {

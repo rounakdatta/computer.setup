@@ -4,7 +4,7 @@ general:
   local_home: "{{ lookup('env','HOME') }}"
 
 homebrew_taps:
-  spacemacs:
+  emacs:
     tap_repo: "d12frosted/emacs-plus"
   passExtensions:
     tap_repo: "simplydanny/pass-extensions"
@@ -20,6 +20,7 @@ homebrew_applications:
   - go
   - pass
   - pass-update
+  - gopass
   - gnupg
   - gnuplot
   - weechat
@@ -36,6 +37,13 @@ homebrew_applications:
   - sbt
   - emacs-plus
   - shellcheck
+  - ripgrep
+  - gnu-getopt
+  - coreutils
+  - nginx
+  - telnet
+  - redis
+  - mysql
 
 homebrew_cask_applications:
   - adoptopenjdk8
@@ -46,6 +54,7 @@ homebrew_cask_applications:
   - kitty
   - visual-studio-code
   - intellij-idea-ce
+  - pycharm-ce
   - zoomus
   - notion
   - whatsapp
@@ -56,7 +65,6 @@ homebrew_cask_applications:
   - postman
   - arduino
   - sublime-text
-  - gopass-ui
   - qutebrowser
   - docker
   - keka
@@ -68,13 +76,51 @@ homebrew_cask_applications:
   - anki
   - forticlient
   - microsoft-office
+  - background-music
+  - discord
+  - goland
+  - chromium
+  - android-platform-tools
+  - scroll-reverser
+  - calibre
 
 external_applications_dmg:
   utorrent:
     name: uTorrentWeb
     url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
+  unetbootin:
+    name: unetbootin
+    url: https://github.com/unetbootin/unetbootin/releases/download/700/unetbootin-mac-700.dmg
+  karabiner_elements:
+    name: karabiner
+    url: https://github.com/pqrs-org/Karabiner-Elements/releases/download/v13.1.0/Karabiner-Elements-13.1.0.dmg
 
-external_applications_pkg: {}
+external_applications_pkg:
+  macports:
+    name: macports
+    url: https://distfiles.macports.org/MacPorts/MacPorts-2.6.4-10.15-Catalina.pkg
+
+pip_python_packages:
+  buku:
+    name: buku
+  buku_server:
+    name: buku[server]
+  airflow:
+    name: apache-airflow[celery]
+  airflow-livy-operators:
+    name: airflow-livy-operators
+  pyhive:
+    name: pyhive
+  pyspark:
+    name: pyspark
+  pykafka:
+    name: pykafka
+  boto3:
+    name: boto3
+  pandas:
+    name: pandas
+  numpy:
+    name: numpy
 
 mas_installed_apps:
   - { id: 497799835, name: "Xcode (11.7)" }

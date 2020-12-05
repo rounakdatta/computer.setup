@@ -1,6 +1,5 @@
 ---
 # install .pkg packages
-# todo: installer demands sudo, and there are issues with this therefore
 - name: check if already application installed
   local_action: stat path=/Applications/{{ appName }}.app
   register: app_exists
@@ -10,18 +9,24 @@
   when: app_exists.stat.exists == False
 
 - name: create a temporary directory to hold the package
-  command: mkdir -p ./tmp/`
+  command: mkdir -p ./tmp/
   when: app_exists.stat.exists == False
 
 - name: download the package
   get_url:
     url: "{{ downloadURL }}"
     dest: "./tmp/{{ appName }}.pkg"
+    mode: '0644'
   when: app_exists.stat.exists == False
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install the package
-  command: installer -pkg ./tmp/{{ appName }}.pkg -target /Applications/
+  block:
+    - name: run the installer to install in Applications directory
+      shell: installer -pkg ./tmp/{{ appName }}.pkg -target /Applications/
+      ignore_errors: True
   when: app_exists.stat.exists == False
+  become: True
 
 - name: clean the temporary directory
   command: rm -R ./tmp/

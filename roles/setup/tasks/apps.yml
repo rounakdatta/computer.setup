@@ -27,3 +27,12 @@
     downloadURL: "{{ item.value.url }}"
     appName: "{{ item.value.name }}"
   with_dict: "{{ external_applications_pkg }}"
+
+- name: starting installing pip-managed python packages
+  include: pip.yml
+  vars:
+    appName: "{{ item.value.name }}"
+  with_dict: "{{ pip_python_packages }}"
+
+- name: starting installing applications from source
+  include: source.yml

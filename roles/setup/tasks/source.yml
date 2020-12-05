@@ -1,0 +1,33 @@
+---
+# install software from source
+- name: set up rust & cargo
+  command: curl https://sh.rustup.rs -sSf | sh
+
+- name: build and install bukubrow-host
+  vars:
+    bbh: bukubrow-host
+  block:
+    - name: create a temporary directory
+      command: mkdir -p ./tmp/
+
+    - name: check out the repository
+      command: https://github.com/samhh/bukubrow-host.git ./tmp/{{ bbh }}
+
+    - name: build it
+      command: make build-darwin-x64
+      args:
+        chdir: tmp/{{ bbh }}
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: move binary to PATH location
+      command: mv bukubrow-darwin-x64 /usr/local/bin/
+      args:
+        chdir: tmp/{{ bbh }}/release
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: install for required browsers
+      command: "bukubrow --install-{{ item }}"
+      with_items:
+        - chrome
+        - firefox
+      ignore_errors: "{{ ansible_check_mode }}"
