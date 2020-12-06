@@ -29,5 +29,8 @@
   become: True
 
 - name: clean the temporary directory
-  command: rm -R ./tmp/
+  file:
+    state: absent
+    path: "./tmp/"
   when: app_exists.stat.exists == False
+  ignore_errors: yes

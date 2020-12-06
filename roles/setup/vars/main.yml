@@ -9,7 +9,7 @@ homebrew_taps:
   passExtensions:
     tap_repo: "simplydanny/pass-extensions"
   openjdk:
-    tap_repo: "adoptopenjdk/openjdk"
+    tap_repo: "AdoptOpenJDK/openjdk"
 
 homebrew_applications:
   - git

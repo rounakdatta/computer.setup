@@ -1,7 +1,7 @@
 ---
 # install software from source
 - name: set up rust & cargo
-  command: curl https://sh.rustup.rs -sSf | sh
+  shell: curl https://sh.rustup.rs -sSf | sh
 
 - name: build and install bukubrow-host
   vars:
@@ -20,7 +20,7 @@
       ignore_errors: "{{ ansible_check_mode }}"
 
     - name: move binary to PATH location
-      command: mv bukubrow-darwin-x64 /usr/local/bin/
+      command: mv bukubrow-darwin-x64 /usr/local/bin/bukubrow
       args:
         chdir: tmp/{{ bbh }}/release
       ignore_errors: "{{ ansible_check_mode }}"

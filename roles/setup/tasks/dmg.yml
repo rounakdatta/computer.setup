@@ -33,7 +33,7 @@
 - name: install the pkg file
   block:
     - name: run the installer to install in Applications directory
-      shell: installer -pkg ./tmp/{{ item.path }} -target /Applications/
+      shell: installer -pkg {{ item.path }} -target /Applications/
       ignore_errors: True
       loop: "{{ pkg_in_disguise.files }}"
   when: app_exists.stat.exists == False and pkg_in_disguise.matched != 0

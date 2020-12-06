@@ -3,3 +3,4 @@
 - name: install the package
   pip:
     name: "{{ appName }}"
+    executable: /usr/local/opt/python@3.8/bin/pip3
