@@ -13,6 +13,7 @@ dotfiles_files:
   - .tmux/base16.sh
   - .tmux.conf
   - .config/fish/functions/fish_prompt.fish
+  - .config/fish/functions/load_beeline.fish
   - .config/fish/config.fish
   - .config/fish/fish_variables
   - .config/kitty/kitty.conf
@@ -20,3 +21,5 @@ dotfiles_files:
   - .doom.d/init.el
   - .doom.d/config.el
   - .doom.d/packages.el
+  - cron/buku_backup.sh
+  - Library/LaunchAgents/backup.buku.plist

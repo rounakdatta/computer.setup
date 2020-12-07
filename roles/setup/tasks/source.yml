@@ -31,3 +31,11 @@
         - chrome
         - firefox
       ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set up buku backup script permissions
+  file: dest=~/cron/buku_backup.sh mode=a+x
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: start the daily buku backup service
+  shell: launchctl load ~/Library/LaunchAgents/backup.buku.plist
+  ignore_errors: "{{ ansible_check_mode }}"

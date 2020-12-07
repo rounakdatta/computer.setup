@@ -4,6 +4,6 @@
   vars_files:
     - config.yml
   roles:
+    - rounakdatta.dotfiles
     - setup
     - geerlingguy.mas
-    - rounakdatta.dotfiles
