@@ -94,6 +94,9 @@ external_applications_dmg:
   karabiner_elements:
     name: karabiner
     url: https://github.com/pqrs-org/Karabiner-Elements/releases/download/v13.1.0/Karabiner-Elements-13.1.0.dmg
+  gpgtools:
+    name: gpgtools
+    url: https://releases.gpgtools.org/GPG_Suite-2020.2.dmg
 
 external_applications_pkg:
   macports:
