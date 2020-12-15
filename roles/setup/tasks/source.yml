@@ -1,5 +1,7 @@
 ---
-# install software from source
+- name: make sure personal directory exists
+  command: mkdir -p ~/personal/
+
 - name: set up rust & cargo
   shell: curl https://sh.rustup.rs -sSf | sh
 
@@ -38,4 +40,12 @@
 
 - name: start the daily buku backup service
   shell: launchctl load ~/Library/LaunchAgents/backup.buku.plist
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set up rclone backup script permissions
+  file: dest=~/cron/rclone_backup.sh mode=a+x
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: start the daily rclone backup service
+  shell: launchctl load ~/Library/LaunchAgents/backup.rclone.plist
   ignore_errors: "{{ ansible_check_mode }}"

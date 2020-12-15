@@ -44,6 +44,7 @@ homebrew_applications:
   - telnet
   - redis
   - mysql
+  - rclone
 
 homebrew_cask_applications:
   - adoptopenjdk8
