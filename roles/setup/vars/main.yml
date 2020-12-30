@@ -21,7 +21,6 @@ homebrew_applications:
   - pass
   - pass-update
   - gopass
-  - gnupg
   - gnuplot
   - weechat
   - tmux
@@ -45,6 +44,7 @@ homebrew_applications:
   - redis
   - mysql
   - rclone
+  - hugo
 
 homebrew_cask_applications:
   - adoptopenjdk8
