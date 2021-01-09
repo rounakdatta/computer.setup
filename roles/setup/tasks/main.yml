@@ -1,4 +1,20 @@
 ---
+- name: github setup
+  include: ssh.yml
+  vars:
+    HostLabel: github.com
+    Preferredauthentications: "publickey"
+    User: "rounakdatta"
+    IdentityFile: "~/.ssh/keys/personal.pem"
+
+- name: gitlab setup
+  include: ssh.yml
+  vars:
+    HostLabel: gitlab.com
+    Preferredauthentications: "publickey"
+    User: "rounakdatta"
+    IdentityFile: "~/.ssh/keys/personal.pem"
+
 # main tree
 - name: application installation
   include: apps.yml

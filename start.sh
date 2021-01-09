@@ -21,14 +21,17 @@ get_artifacts() {
 }
 
 start_install() {
-    ansible-galaxy install -r requirements.yml
+    ansible-galaxy role install --force -r requirements.yml
+    ansible-galaxy collection install --force -r requirements.yml
     ansible-playbook --ask-become-pass -i ./hosts playbook.yml --verbose
 }
 
 dry_run() {
-    ansible-galaxy install -r requirements.yml
+    ansible-galaxy role install --force -r requirements.yml
+    ansible-galaxy collection install --force -r requirements.yml
     sed '/geerlingguy.mas/d' playbook.yml > playbook.check.yml
     ansible-playbook -i ./hosts playbook.check.yml --check
+    rm -f playbook.check.yml
 }
 
 main() {

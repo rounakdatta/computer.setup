@@ -1,0 +1,18 @@
+---
+- name: configure and set up gnupg and password-store
+  ignore_errors: "{{ ansible_check_mode }}"
+  vars:
+    public_key: ./secrets/public.key
+    private_key: ./secrets/private.key
+    pass_repository: git@gitlab.com:rounakdatta/pass.git
+  block:
+    - name: import public key
+      shell: gpg --import "{{ public_key }}"
+
+    - name: import private key
+      shell: gpg --allow-secret-key-import --import "{{ private_key }}"
+
+    - name: clone to local password-store from remote
+      git:
+        repo: "{{ pass_repository }}"
+        dest: "~/.password-store"

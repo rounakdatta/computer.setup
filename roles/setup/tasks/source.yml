@@ -49,3 +49,26 @@
 - name: start the daily rclone backup service
   shell: launchctl load ~/Library/LaunchAgents/backup.rclone.plist
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure and start nextdns service
+  vars:
+    nextdns_id:
+      - "{{ lookup('community.general.passwordstore', 'nextdns/id') }}"
+  block:
+    - name: set configurations and then auto-start
+      shell: nextdns install -config "{{ nextdns_id }}" -report-client-info -auto-activate
+      become: True
+      ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set up ssh hosts through config file generation
+  include: ssh.yml
+  ignore_errors: yes
+  vars:
+    HostLabel: "{{ lookup('community.general.passwordstore', item + '/HostLabel') }}"
+    Preferredauthentications: "{{ lookup('community.general.passwordstore', item + '/Preferredauthentications') }}"
+    User: "{{ lookup('community.general.passwordstore', item + '/User') }}"
+    IdentityFile: "{{ lookup('community.general.passwordstore', item + '/IdentityFile') }}"
+    HostName: "{{ lookup('community.general.passwordstore', item + '/HostName') }}"
+    ProxyCommand: "{{ lookup('community.general.passwordstore', item + '/ProxyCommand') }}"
+    Port: "{{ lookup('community.general.passwordstore', item + '/Port') }}"
+  with_items: "{{ ssh_hosts }}"

@@ -1,3 +1,7 @@
 ---
+roles:
 - name: geerlingguy.mas
 - name: rounakdatta.dotfiles
+
+collections:
+- name: community.general

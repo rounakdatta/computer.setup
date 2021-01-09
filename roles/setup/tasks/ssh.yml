@@ -1,0 +1,16 @@
+---
+- name: define the ssh config file location
+  set_fact:
+    ssh_config_file: "~/.ssh/config"
+
+- name: check if exists or create the config file
+  file:
+    path: "{{ ssh_config_file }}"
+    state: touch
+    mode: 0644
+
+- name: generate ssh configs
+  blockinfile:
+    dest: "{{ ssh_config_file }}"
+    block: "{{ lookup('template', 'ssh_config.j2') }}"
+    marker: ""

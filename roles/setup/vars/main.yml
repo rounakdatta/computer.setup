@@ -45,6 +45,7 @@ homebrew_applications:
   - mysql
   - rclone
   - hugo
+  - nextdns/tap/nextdns
 
 homebrew_cask_applications:
   - adoptopenjdk8
@@ -132,3 +133,5 @@ mas_installed_apps:
   - { id: 1254743014, name: "LyricsX (1.5.4)" }
   - { id: 1476177064, name: "Reading Queue (1.2.1)" }
   - { id: 1514817810, name: "Poolside FM (1.1.2)" }
+
+ssh_hosts: []

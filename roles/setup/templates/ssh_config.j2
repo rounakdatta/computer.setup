@@ -1,0 +1,10 @@
+#jinja2:lstrip_blocks: True
+
+{% set attributes = ["Preferredauthentications", "User", "IdentityFile", "HostName", "ProxyCommand", "Port"] %}
+
+Host {{ HostLabel }}
+{% for attribute in attributes %}
+    {% set attribute_value = vars[attribute] %}
+    {% if attribute_value is defined %} {{ attribute }} {{ attribute_value }} {% endif %}
+
+{% endfor %}
