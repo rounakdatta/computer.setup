@@ -46,6 +46,7 @@ homebrew_applications:
   - rclone
   - hugo
   - nextdns/tap/nextdns
+  - librdkafka
 
 homebrew_cask_applications:
   - adoptopenjdk8
