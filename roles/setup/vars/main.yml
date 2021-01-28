@@ -86,6 +86,7 @@ homebrew_cask_applications:
   - android-platform-tools
   - scroll-reverser
   - calibre
+  - skype
 
 external_applications_dmg:
   utorrent:
