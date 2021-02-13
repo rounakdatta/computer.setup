@@ -49,7 +49,7 @@ homebrew_applications:
   - librdkafka
 
 homebrew_cask_applications:
-  - adoptopenjdk8
+  - adoptopenjdk11
   - google-chrome
   - firefox
   - microsoft-edge
