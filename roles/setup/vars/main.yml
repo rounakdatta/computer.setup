@@ -86,7 +86,7 @@ homebrew_cask_applications:
   - android-platform-tools
   - scroll-reverser
   - calibre
-  - skype
+  - signal
 
 external_applications_dmg:
   utorrent:
@@ -137,3 +137,7 @@ mas_installed_apps:
   - { id: 1514817810, name: "Poolside FM (1.1.2)" }
 
 ssh_hosts: []
+
+fisher_packages:
+  - reitzig/sdkman-for-fish
+  - edc/bass

@@ -72,3 +72,12 @@
     ProxyCommand: "{{ lookup('community.general.passwordstore', item + '/ProxyCommand') }}"
     Port: "{{ lookup('community.general.passwordstore', item + '/Port') }}"
   with_items: "{{ ssh_hosts }}"
+
+- name: set up fisher for fish
+  shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set up fisher packages
+  ignore_errors: "{{ ansible_check_mode }}"
+  shell: "fisher install {{ item }}"
+  with_items: "{{ fisher_packages }}"
