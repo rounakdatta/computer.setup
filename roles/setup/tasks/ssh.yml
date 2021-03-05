@@ -3,6 +3,11 @@
   set_fact:
     ssh_config_file: "~/.ssh/config"
 
+- name: check/create the ssh configs directory
+  file:
+    path: "~/.ssh"
+    state: directory
+
 - name: check if exists or create the config file
   file:
     path: "{{ ssh_config_file }}"
