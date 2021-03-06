@@ -7,8 +7,14 @@ setup_prerequisites() {
     fi
 
     if ! ansible --version; then
-        echo "installing ansible through pip3"
-        pip3 install ansible
+        if [ "$(uname)" != "Darwin" ]; then
+            echo "installing ansible through pip3"
+            pip3 install ansible
+        else
+            echo "setting up brew and installing through brew"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+            brew install ansible
+        fi
     fi
 }
 

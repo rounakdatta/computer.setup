@@ -8,7 +8,7 @@ curl -s https://raw.githubusercontent.com/rounakdatta/computer.setup/master/star
 ```
 
 #### Support & Info
-This playbook sets up and uses homebrew for the application installations. Tested to be working on macOS and Linux.
+This playbook leverages existing modules wherever possible. Tested to be working on macOS (Linux support WIP).
 
 Capability & support is as:
 - [x] homebrew CLI applications
@@ -20,3 +20,4 @@ Capability & support is as:
 - [x] Symlinking custom dotfiles from a repository
 - [x] pip-managed Python packages
 - [x] Custom tasks to install from source
+- [x] Generating private SSH configs

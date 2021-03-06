@@ -136,7 +136,15 @@ mas_installed_apps:
   - { id: 1476177064, name: "Reading Queue (1.2.1)" }
   - { id: 1514817810, name: "Poolside FM (1.1.2)" }
 
-ssh_hosts: []
+ssh_hosts:
+  - personal
+  - dev-hadoop-edge
+  - prod-hadoop-edge
+  - datanode
+  - prod-c3
+  - load-c3
+  - load-broker
+  - load-hadoop-edge
 
 fisher_packages:
   - reitzig/sdkman-for-fish
