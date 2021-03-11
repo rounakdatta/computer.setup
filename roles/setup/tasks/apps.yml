@@ -7,12 +7,14 @@
   homebrew:
     name: "{{ homebrew_applications }}"
     state: latest
+    install_options: verbose
 
 - name: start installing homebrew cask applications
   homebrew_cask:
     name: "{{ homebrew_cask_applications }}"
     state: present
     accept_external_apps: yes
+    install_options: verbose
 
 - name: start downloading and installing external applications (dmg)
   include: dmg.yml
