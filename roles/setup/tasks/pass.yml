@@ -10,7 +10,6 @@
       file:
         path: ~/.ssh/keys/personal.pem
         mode: '0600'
-        become: True
 
     - name: import public key
       shell: "gpg --import {{ public_key }}"
