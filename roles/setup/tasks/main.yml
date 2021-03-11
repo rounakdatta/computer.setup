@@ -4,6 +4,7 @@
   vars:
     HostLabel: github.com
     Preferredauthentications: "publickey"
+    StrictHostKeyChecking: "no"
     User: "rounakdatta"
     IdentityFile: "~/.ssh/keys/personal.pem"
 
@@ -12,6 +13,7 @@
   vars:
     HostLabel: gitlab.com
     Preferredauthentications: "publickey"
+    StrictHostKeyChecking: "no"
     User: "rounakdatta"
     IdentityFile: "~/.ssh/keys/personal.pem"
 
