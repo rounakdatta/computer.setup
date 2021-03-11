@@ -2,8 +2,23 @@
 - name: make sure personal directory exists
   command: mkdir -p ~/personal/
 
+- name: set up private password store
+  include: pass.yml
+
+- name: set up buku database from git
+  block:
+    - name: check/create the buku configs directory
+      file:
+        path: "~/.local/share"
+        state: directory
+
+    - name: checkout the repository
+      git:
+        repo: git@gitlab.com:rounakdatta/buku.git
+        dest: "~/.local/share/buku"
+
 - name: set up rust & cargo
-  shell: curl https://sh.rustup.rs -sSf | sh
+  shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 - name: build and install bukubrow-host
   vars:
@@ -13,7 +28,12 @@
       command: mkdir -p ./tmp/
 
     - name: check out the repository
-      command: git clone https://github.com/samhh/bukubrow-host.git ./tmp/{{ bbh }}
+      git:
+        repo: https://github.com/samhh/bukubrow-host.git
+        dest: "./tmp/{{ bbh }}"
+
+    - name: set cargo environment variable
+      shell: source $HOME/.cargo/env
 
     - name: build it
       command: make build-darwin-x64
@@ -22,7 +42,7 @@
       ignore_errors: "{{ ansible_check_mode }}"
 
     - name: move binary to PATH location
-      command: mv bukubrow-darwin-x64 /usr/local/bin/bukubrow
+      shell: unzip -o build-darwin-x64.zip && mv bukubrow-darwin-x64 /usr/local/bin/bukubrow
       args:
         chdir: tmp/{{ bbh }}/release
       ignore_errors: "{{ ansible_check_mode }}"

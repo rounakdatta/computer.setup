@@ -2,13 +2,20 @@
 Minimalist Ansible playbook to set up your new system with speed 🚀.
 
 #### Start
-It's as easy as issuing a shell command:
+To set up git SSH access and password store, as a first step, we need to place the keys as:
+- SSH private key is to be kept at `~/.ssh/keys/personal.pem`
+- GPG private key is to be kept at `~/.secrets/private.key`
+- GPG public key is to be kept at `~/.secrets/public.key`
+
+If you're transporting these keys from an existing system, [this gist](https://gist.github.com/rounakdatta/e8555f6feab148a2337b05dce50a71e8) might be useful.
+
+Then it's as easy as issuing a shell command:
 ```bash
 curl -s https://raw.githubusercontent.com/rounakdatta/computer.setup/master/start.sh | /bin/bash
 ```
 
 #### Support & Info
-This playbook leverages existing modules wherever possible. Tested to be working on macOS (Linux support WIP).
+This playbook is idempotent. Tested to be working on macOS (Linux support WIP).
 
 Capability & support is as:
 - [x] homebrew CLI applications

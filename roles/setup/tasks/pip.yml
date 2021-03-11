@@ -3,5 +3,5 @@
 - name: install the package
   pip:
     name: "{{ appName }}"
-    executable: /usr/local/opt/python@3.8/bin/pip3
+    executable: /usr/local/opt/python3/bin/pip3
   ignore_errors: "{{ ansible_check_mode }}"

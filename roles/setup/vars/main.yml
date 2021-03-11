@@ -58,7 +58,7 @@ homebrew_cask_applications:
   - visual-studio-code
   - intellij-idea-ce
   - pycharm-ce
-  - zoomus
+  - zoom
   - notion
   - whatsapp
   - android-studio
