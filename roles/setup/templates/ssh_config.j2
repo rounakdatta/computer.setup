@@ -1,10 +1,16 @@
 #jinja2:lstrip_blocks: True
 
-{% set attributes = ["Preferredauthentications", "User", "IdentityFile", "HostName", "ProxyCommand", "Port", "StrictHostKeyChecking"] %}
-
 Host {{ HostLabel }}
-{% for attribute in attributes %}
-    {% set attribute_value = vars[attribute] %}
-    {% if attribute_value is defined %} {{ attribute }} {{ attribute_value }} {% endif %}
+	{% if Preferredauthentications is defined and Preferredauthentications != "" %} Preferredauthentications {{ Preferredauthentications }} {% endif %}
 
-{% endfor %}
+	{% if User is defined and User != "" %} User {{ User }} {% endif %}
+
+	{% if IdentityFile is defined and IdentityFile != "" %} IdentityFile {{ IdentityFile }} {% endif %}
+
+	{% if HostName is defined and HostName != "" %} HostName {{ HostName }} {% endif %}
+
+	{% if ProxyCommand is defined and ProxyCommand != "" %} ProxyCommand {{ ProxyCommand }} {% endif %}
+
+	{% if Port is defined and Port != "" %} Port {{ Port }} {% endif %}
+
+	{% if StrictHostKeyChecking is defined and StrictHostKeyChecking != "" %} StrictHostKeyChecking {{ StrictHostKeyChecking }} {% endif %}

@@ -84,20 +84,25 @@
   include: ssh.yml
   ignore_errors: yes
   vars:
-    HostLabel: "{{ lookup('community.general.passwordstore', item + '/HostLabel') }}"
-    Preferredauthentications: "{{ lookup('community.general.passwordstore', item + '/Preferredauthentications') }}"
-    User: "{{ lookup('community.general.passwordstore', item + '/User') }}"
-    IdentityFile: "{{ lookup('community.general.passwordstore', item + '/IdentityFile') }}"
-    HostName: "{{ lookup('community.general.passwordstore', item + '/HostName') }}"
-    ProxyCommand: "{{ lookup('community.general.passwordstore', item + '/ProxyCommand') }}"
-    Port: "{{ lookup('community.general.passwordstore', item + '/Port') }}"
+    HostLabel: "{{ lookup('community.general.passwordstore', item + '/HostLabel', errors='ignore') }}"
+    Preferredauthentications: "{{ lookup('community.general.passwordstore', item + '/Preferredauthentications', errors='ignore') }}"
+    User: "{{ lookup('community.general.passwordstore', item + '/User', errors='ignore') }}"
+    IdentityFile: "{{ lookup('community.general.passwordstore', item + '/IdentityFile', errors='ignore') }}"
+    HostName: "{{ lookup('community.general.passwordstore', item + '/HostName', errors='ignore') }}"
+    ProxyCommand: "{{ lookup('community.general.passwordstore', item + '/ProxyCommand', errors='ignore') }}"
+    Port: "{{ lookup('community.general.passwordstore', item + '/Port', errors='ignore') }}"
+    StrictHostKeyChecking: "{{ lookup('community.general.passwordstore', item + '/StrictHostKeyChecking', errors='ignore') }}"
   with_items: "{{ ssh_hosts }}"
 
 - name: set up fisher for fish
   shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-  ignore_errors: "{{ ansible_check_mode }}"
+  args:
+    executable: /usr/local/bin/fish
+  ignore_errors: True
 
 - name: set up fisher packages
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: True
   shell: "fisher install {{ item }}"
+  args:
+    executable: /usr/local/bin/fish
   with_items: "{{ fisher_packages }}"

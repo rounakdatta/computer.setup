@@ -15,6 +15,7 @@
     mode: 0644
 
 - name: generate ssh configs
+  ignore_errors: True
   blockinfile:
     dest: "{{ ssh_config_file }}"
     block: "{{ lookup('template', 'ssh_config.j2') }}"
