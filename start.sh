@@ -1,15 +1,22 @@
 #!/bin/bash
 
 setup_prerequisites() {
+    # install pip on macOS
     if ! pip3 --version; then
-        echo "installing pip3"
+        echo "installing pip3 through easy_install"
         sudo easy_install pip3
+    fi
+
+    # install pip on arch linux
+    if ! pip3 --version; then
+        echo "installing pip3 through pacman"
+        sudo pacman -Syu python-pip
     fi
 
     if ! ansible --version; then
         if [ "$(uname)" != "Darwin" ]; then
-            echo "installing ansible through pip3"
-            pip3 install ansible
+            echo "installing ansible through pacman"
+            sudo pacman -Syu ansible
         else
             echo "setting up brew and installing through brew"
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"

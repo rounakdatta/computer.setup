@@ -61,6 +61,7 @@
 - name: start the daily buku backup service
   shell: launchctl load ~/Library/LaunchAgents/backup.buku.plist
   ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_distribution == "MacOSX"
 
 - name: set up rclone backup script permissions
   file: dest=~/cron/rclone_backup.sh mode=a+x
@@ -69,6 +70,7 @@
 - name: start the daily rclone backup service
   shell: launchctl load ~/Library/LaunchAgents/backup.rclone.plist
   ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_distribution == "MacOSX"
 
 - name: configure and start nextdns service
   vars:

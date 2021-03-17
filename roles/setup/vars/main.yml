@@ -42,7 +42,6 @@ homebrew_applications:
   - nginx
   - telnet
   - redis
-  - mysql
   - rclone
   - hugo
   - nextdns/tap/nextdns
@@ -135,6 +134,69 @@ mas_installed_apps:
   - { id: 1254743014, name: "LyricsX (1.5.4)" }
   - { id: 1476177064, name: "Reading Queue (1.2.1)" }
   - { id: 1514817810, name: "Poolside FM (1.1.2)" }
+
+arch_core_packages:
+  - git
+  - tree
+  - curl
+  - wget
+  - vim
+  - go
+  - gnupg
+  - pass
+  - gopass
+  - gnuplot
+  - weechat
+  - tmux
+  - scala
+  - fish
+  - jq
+  - gradle
+  - pinentry
+  - nodejs
+  - ruby
+  - sbt
+  - emacs
+  - shellcheck
+  - ripgrep
+  - coreutils
+  - nginx
+  - inetutils
+  - redis
+  - rclone
+  - hugo
+  - librdkafka
+  - kitty
+  - intellij-idea-community-edition
+  - pycharm-community-edition
+  - telegram-desktop
+  - vlc
+  - arduino
+  - qutebrowser
+  - docker
+  - krita
+  - anki
+  - openfortivpn
+  - discord
+  - signal-desktop
+  - qbittorrent
+
+arch_aur_packages:
+  - pass-update
+  - mysql
+  - nextdns
+  - jdk11-adoptopenjdk
+  - google-chrome
+  - firefox
+  - brave
+  - visual-studio-code-bin
+  - zoom
+  - mathpix-snipping-tool
+  - postman-bin
+  - sublime-text-3
+  - spotify
+  - hexeditor
+  - balena-etcher
 
 ssh_hosts:
   - personal

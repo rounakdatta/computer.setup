@@ -1,6 +1,7 @@
 ---
 # playbook for setting up a development mac
-- hosts: mac
+- hosts: unix
+  gather_facts: yes
   vars_files:
     - config.yml
   roles:

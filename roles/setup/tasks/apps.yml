@@ -2,12 +2,14 @@
 # make sure homebrew is installed, update brew and install applications
 - name: setup homebrew
   include: homebrew.yml
+  when: ansible_distribution == "MacOSX"
 
 - name: start installing homebrew applications
   homebrew:
     name: "{{ homebrew_applications }}"
     state: latest
     install_options: verbose
+  when: ansible_distribution == "MacOSX"
 
 - name: start installing homebrew cask applications
   homebrew_cask:
@@ -15,6 +17,7 @@
     state: present
     accept_external_apps: yes
     install_options: verbose
+  when: ansible_distribution == "MacOSX"
 
 - name: start downloading and installing external applications (dmg)
   include: dmg.yml
@@ -22,6 +25,7 @@
     downloadURL: "{{ item.value.url }}"
     appName: "{{ item.value.name }}"
   with_dict: "{{ external_applications_dmg }}"
+  when: ansible_distribution == "MacOSX"
 
 - name: start downloading and installing external applications (pkg)
   include: pkg.yml
@@ -29,6 +33,11 @@
     downloadURL: "{{ item.value.url }}"
     appName: "{{ item.value.name }}"
   with_dict: "{{ external_applications_pkg }}"
+  when: ansible_distribution == "MacOSX"
+
+- name: install packages for arch linux
+  include: arch.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: starting installing pip-managed python packages
   include: pip.yml
