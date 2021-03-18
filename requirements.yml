@@ -3,7 +3,8 @@ roles:
 - name: geerlingguy.mas
 - name: rounakdatta.dotfiles
   src: https://github.com/rounakdatta/ansible-role-dotfiles.git
-  version: origin/dir_setup
+  version: origin/master
+- name: kewlfft.aur
 
 collections:
 - name: community.general

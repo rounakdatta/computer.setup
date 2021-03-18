@@ -15,7 +15,7 @@ curl -s https://raw.githubusercontent.com/rounakdatta/computer.setup/master/star
 ```
 
 #### Support & Info
-This playbook is idempotent. Tested to be working on macOS (Linux support WIP).
+This playbook is idempotent. Tested to be working on macOS and Arch Linux.
 
 Capability & support is as:
 - [x] homebrew CLI applications

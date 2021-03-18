@@ -1,2 +1,2 @@
-[mac]
+[unix]
 localhost ansible_connection=local
