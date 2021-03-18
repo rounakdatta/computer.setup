@@ -48,6 +48,7 @@ homebrew_applications:
   - librdkafka
 
 homebrew_cask_applications:
+  - slack
   - adoptopenjdk11
   - google-chrome
   - firefox
@@ -127,6 +128,8 @@ pip_python_packages:
     name: pandas
   numpy:
     name: numpy
+  PyGObject:
+    name: PyGObject
 
 mas_installed_apps:
   - { id: 497799835, name: "Xcode (11.7)" }
@@ -180,10 +183,14 @@ arch_core_packages:
   - discord
   - signal-desktop
   - qbittorrent
+  - zip
+  - gobject-introspection
+  - pulseaudio-bluetooth
 
 arch_aur_packages:
   - pass-update
   - mysql
+  - slack-desktop
   - nextdns
   - jdk11-adoptopenjdk
   - google-chrome
@@ -197,6 +204,9 @@ arch_aur_packages:
   - spotify
   - hexeditor
   - balena-etcher
+  - st
+  - bukubrow
+  - gopass-jsonapi-git
 
 ssh_hosts:
   - personal

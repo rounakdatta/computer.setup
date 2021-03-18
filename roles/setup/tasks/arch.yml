@@ -2,14 +2,13 @@
 # make sure all packaages are installed
 - name: install core packages through pacman
   pacman:
-    name: "{{ item }}"
+    name: "{{ arch_core_packages }}"
     state: latest
-  with_items: "{{ arch_core_packages }}"
   become: True
 
-- name: install AUR packages through yay
-  aur:
+# install AUR packages through yay
+- aur:
+    use: yay
     name: "{{ item }}"
     state: latest
   with_items: "{{ arch_aur_packages }}"
-  become: True

@@ -5,6 +5,7 @@
   vars_files:
     - config.yml
   roles:
+    - kewlfft.aur
     - rounakdatta.dotfiles
     - setup
-    - geerlingguy.mas
+    - { role: geerlingguy.mas, when: ansible_distribution == "MacOSX" }

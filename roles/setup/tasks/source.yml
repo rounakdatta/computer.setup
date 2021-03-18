@@ -5,6 +5,28 @@
 - name: set up private password store
   include: pass.yml
 
+- name: set fish as the default shell
+  shell: chsh -s /usr/bin/fish
+  become: True
+
+- name: set up gopass-jsonapi
+  block:
+    - name: create a temporary directory
+      command: mkdir -p ./tmp/
+
+    - name: checks out the repository
+      git:
+        repo: https://github.com/gopasspw/gopass-jsonapi.git
+        dest: "./tmp/gopass-jsonapi"
+
+    - name: build it
+      shell: make build
+      args:
+        executable: /bin/bash
+        chdir: tmp/gopass-jsonapi
+      ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_distribution == "MacOSX"
+
 - name: set up buku database from git
   block:
     - name: check/create the buku configs directory
@@ -23,29 +45,32 @@
 - name: build and install bukubrow-host
   vars:
     bbh: bukubrow-host
+    platform: "{{ 'darwin-x64' if ansible_distribution == 'MacOSX' else 'linux-x64' }}"
   block:
     - name: create a temporary directory
       command: mkdir -p ./tmp/
+      when: ansible_distribution == "MacOSX"
 
     - name: check out the repository
       git:
         repo: https://github.com/samhh/bukubrow-host.git
         dest: "./tmp/{{ bbh }}"
-
-    - name: set cargo environment variable
-      shell: source $HOME/.cargo/env
+      when: ansible_distribution == "MacOSX"
 
     - name: build it
-      command: make build-darwin-x64
+      shell: source $HOME/.cargo/env && make build-{{ platform }}
       args:
+        executable: /bin/bash
         chdir: tmp/{{ bbh }}
       ignore_errors: "{{ ansible_check_mode }}"
+      when: ansible_distribution == "MacOSX"
 
     - name: move binary to PATH location
-      shell: unzip -o build-darwin-x64.zip && mv bukubrow-darwin-x64 /usr/local/bin/bukubrow
+      shell: unzip -o build-{{ platform }}.zip && mv bukubrow-{{ platform }} /usr/local/bin/bukubrow
       args:
         chdir: tmp/{{ bbh }}/release
       ignore_errors: "{{ ansible_check_mode }}"
+      when: ansible_distribution == "MacOSX"
 
     - name: install for required browsers
       command: "bukubrow --install-{{ item }}"
@@ -80,7 +105,7 @@
     - name: set configurations and then auto-start
       shell: nextdns install -config "{{ nextdns_id }}" -report-client-info -auto-activate
       become: True
-      ignore_errors: "{{ ansible_check_mode }}"
+      ignore_errors: True
 
 - name: set up ssh hosts through config file generation
   include: ssh.yml
@@ -99,12 +124,43 @@
 - name: set up fisher for fish
   shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
   args:
-    executable: /usr/local/bin/fish
+    executable: /usr/bin/fish
   ignore_errors: True
 
 - name: set up fisher packages
   ignore_errors: True
   shell: "fisher install {{ item }}"
   args:
-    executable: /usr/local/bin/fish
+    executable: /usr/bin/fish
   with_items: "{{ fisher_packages }}"
+
+- name: configure bluetooth on Linux
+  block:
+    - name: start the bluetooth service
+      systemd:
+        name: bluetooth
+        state: started
+
+    - name: start pulseaudio instance if not already
+      shell: pulseaudio -k
+  when: ansible_distribution == "Archlinux"
+
+- name: set up kinto (macOS keybindings on Linux)
+  ignore_errors: True
+  block:
+    - name: check out the repository
+      git:
+        repo: https://github.com/rbreaves/kinto.git
+        dest: "/tmp/kinto"
+
+    - name: run the setup
+      shell: "./setup.py"
+      args:
+        chdir: /tmp/kinto
+        executable: /bin/bash
+
+    - name: run through the GUI
+      shell: "~/.config/kinto/gui/kinto-gui.py"
+      args:
+        executable: /bin/bash
+  when: ansible_distribution == "Archlinux"
