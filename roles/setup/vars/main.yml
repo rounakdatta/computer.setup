@@ -195,7 +195,7 @@ arch_aur_packages:
   - jdk11-adoptopenjdk
   - google-chrome
   - firefox
-  - brave
+  - brave-bin
   - visual-studio-code-bin
   - zoom
   - mathpix-snipping-tool
@@ -203,7 +203,6 @@ arch_aur_packages:
   - sublime-text-3
   - spotify
   - hexeditor
-  - balena-etcher
   - st
   - bukubrow
   - gopass-jsonapi-git
