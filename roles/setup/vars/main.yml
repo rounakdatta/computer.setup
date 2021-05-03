@@ -46,6 +46,7 @@ homebrew_applications:
   - hugo
   - nextdns/tap/nextdns
   - librdkafka
+  - maven
 
 homebrew_cask_applications:
   - slack
@@ -87,6 +88,7 @@ homebrew_cask_applications:
   - scroll-reverser
   - calibre
   - signal
+  - dbeaver-community
 
 external_applications_dmg:
   utorrent:
