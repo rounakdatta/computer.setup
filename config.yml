@@ -25,3 +25,4 @@ dotfiles_files:
   - cron/rclone_backup.sh
   - Library/LaunchAgents/backup.buku.plist
   - Library/LaunchAgents/backup.rclone.plist
+  - .gnupg/gpg-agent.conf

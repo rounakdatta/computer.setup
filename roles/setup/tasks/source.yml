@@ -1,4 +1,7 @@
 ---
+vars:
+  fish_native_path: "{{ '/usr/local/bin/fish' if ansible_distribution == 'MacOSX' else '/usr/bin/fish' }}"
+
 - name: make sure personal directory exists
   command: mkdir -p ~/personal/
 
@@ -6,7 +9,7 @@
   include: pass.yml
 
 - name: set fish as the default shell
-  shell: chsh -s /usr/bin/fish
+  shell: "chsh -s {{ fish_native_path }}"
   become: True
 
 - name: set up gopass-jsonapi
@@ -25,7 +28,22 @@
         executable: /bin/bash
         chdir: tmp/gopass-jsonapi
       ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: move binary to PATH location
+      shell: mv gopass-jsonapi /usr/local/bin/gopass-jsonapi
+      args:
+        chdir: tmp/gopass-jsonapi
+      ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_distribution == "MacOSX"
+
+- name: configure gopass-jsonapi for chrome
+  expect:
+    command: gopass-jsonapi configure
+    responses:
+      (.*)which browser(.*): "chrome"
+      (.*)all users(.*): "N"
+      (.*)gopass_wrapper.sh(.*): "\n"
+      (.*)manifest and weapper(.*): "Y"
 
 - name: set up buku database from git
   block:
@@ -58,7 +76,7 @@
       when: ansible_distribution == "MacOSX"
 
     - name: build it
-      shell: source $HOME/.cargo/env && make build-{{ platform }}
+      shell: source $HOME/.cargo/env && cargo build --release
       args:
         executable: /bin/bash
         chdir: tmp/{{ bbh }}
@@ -66,9 +84,9 @@
       when: ansible_distribution == "MacOSX"
 
     - name: move binary to PATH location
-      shell: unzip -o build-{{ platform }}.zip && mv bukubrow-{{ platform }} /usr/local/bin/bukubrow
+      shell: mv bukubrow /usr/local/bin/bukubrow
       args:
-        chdir: tmp/{{ bbh }}/release
+        chdir: tmp/{{ bbh }}/target/release
       ignore_errors: "{{ ansible_check_mode }}"
       when: ansible_distribution == "MacOSX"
 
@@ -124,14 +142,14 @@
 - name: set up fisher for fish
   shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
   args:
-    executable: /usr/bin/fish
+    executable: "{{ fish_native_path }}"
   ignore_errors: True
 
 - name: set up fisher packages
   ignore_errors: True
   shell: "fisher install {{ item }}"
   args:
-    executable: /usr/bin/fish
+    executable: "{{ fish_native_path }}"
   with_items: "{{ fisher_packages }}"
 
 - name: configure bluetooth on Linux
@@ -164,3 +182,14 @@
       args:
         executable: /bin/bash
   when: ansible_distribution == "Archlinux"
+
+- name: start mysql server on macOS
+  ignore_errors: True
+  block:
+    - name: set correct user permissions for the mysql service
+      shell: chown -R _mysql:mysql /usr/local/var/mysql
+      become: True
+
+    - name: start the service
+      shell: mysql.server start
+      become: True
