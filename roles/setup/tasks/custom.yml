@@ -1,0 +1,13 @@
+---
+- name: download and extract the archives
+  ansible.builtin.unarchive:
+    src: "{{ item.value.url }}"
+    dest: "~/{{ item.value.directory }}/{{ item.value.name }}"
+    remote_src: yes
+    with_dict: "{{ custom_archives }}"
+
+  - name: set up git repositories
+    git:
+      repo: "{{ item.value.repo }}"
+      dest: "~/{{ item.value.directory }}/{{ item.value.name }}"
+    with_dict: "{{ custom_repositories }}"

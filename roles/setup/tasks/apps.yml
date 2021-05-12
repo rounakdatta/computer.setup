@@ -35,15 +35,18 @@
   with_dict: "{{ external_applications_pkg }}"
   when: ansible_distribution == "MacOSX"
 
-- name: install packages for arch linux
+- name: start installing packages for arch linux
   include: arch.yml
   when: ansible_distribution == "Archlinux"
 
-- name: starting installing pip-managed python packages
+- name: start installing pip-managed python packages
   include: pip.yml
   vars:
     appName: "{{ item.value.name }}"
   with_dict: "{{ pip_python_packages }}"
 
-- name: starting installing applications from source
+- name: start installing applications from source
   include: source.yml
+
+- name: start setting up custom archives and git repositories
+  include: custom.yml

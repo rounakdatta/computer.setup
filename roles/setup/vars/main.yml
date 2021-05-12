@@ -26,7 +26,7 @@ homebrew_applications:
   - tmux
   - scala
   - fish
-  - mysql
+  - mysql@5.7
   - jq
   - gradle
   - pinentry
@@ -50,6 +50,7 @@ homebrew_applications:
 
 homebrew_cask_applications:
   - slack
+  - adoptopenjdk8
   - adoptopenjdk11
   - google-chrome
   - firefox
@@ -218,6 +219,28 @@ ssh_hosts:
   - load-c3
   - load-broker
   - load-hadoop-edge
+  - prod-bastion
+  - hercules-emr
+
+custom_archives:
+  hadoop:
+    name: hadoop-2.5.1
+    directory: tooling
+    url: https://archive.apache.org/dist/hadoop/core/hadoop-2.5.1/hadoop-2.5.1.tar.gz
+  hive:
+    name: apache-hive-1.2.1-bin
+    directory: tooling
+    url: https://archive.apache.org/dist/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz
+
+custom_repositories:
+  public_wiki:
+    name: rounakdatta.github.io
+    directory: personal
+    repo: git@github.com:rounakdatta/rounakdatta.github.io.git
+  private_wiki:
+    name: rounakdatta.gitlab.io
+    directory: personal
+    repo: git@gitlab.com:rounakdatta/rounakdatta.gitlab.io.git
 
 fisher_packages:
   - reitzig/sdkman-for-fish
