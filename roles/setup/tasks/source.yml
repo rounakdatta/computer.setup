@@ -5,6 +5,11 @@ vars:
 - name: make sure personal directory exists
   command: mkdir -p ~/personal/
 
+- name: install tpm tmux from source
+  git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "~/.tmux/plugins/tpm"
+
 - name: set up private password store
   include: pass.yml
 
