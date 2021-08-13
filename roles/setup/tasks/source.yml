@@ -111,6 +111,26 @@ vars:
   ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_distribution == "MacOSX"
 
+- name: prepare the config for rclone backup service
+  vars:
+    Name: "{{ lookup('community.general.passwordstore', 'backblaze' + '/name', errors='ignore') }}"
+    Account: "{{ lookup('community.general.passwordstore', 'backblaze' + '/account', errors='ignore') }}"
+    Key: "{{ lookup('community.general.passwordstore', 'backblaze' + '/key', errors='ignore') }}"
+
+  block:
+    - name: Substitute the environment variables
+      lineinfile:
+        dest: "~/.config/rclone/rclone.conf"
+        regexp: "{{ item.regex }}"
+        line: "{{ item.actual }}"
+      with_items:
+        - regex: "^\[.*$"
+          actual: "[{{ Name }}]"
+        - regex: "^account.*$"
+          actual: "account = {{ Account }}"
+        - regex: "^key.*$"
+          actual: "key = {{ Key }}"
+
 - name: set up rclone backup script permissions
   file: dest=~/cron/rclone_backup.sh mode=a+x
   ignore_errors: "{{ ansible_check_mode }}"
