@@ -22,6 +22,7 @@ dotfiles_files:
   - .doom.d/config.el
   - .doom.d/packages.el
   - cron/buku_backup.sh
+  - tooling/config.py
   - cron/rclone_backup.sh
   - Library/LaunchAgents/backup.buku.plist
   - Library/LaunchAgents/backup.rclone.plist
