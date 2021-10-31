@@ -134,6 +134,8 @@ pip_python_packages:
     name: numpy
   PyGObject:
     name: PyGObject
+  syncrclone:
+    name: git+https://github.com/Jwink3101/syncrclone
 
 mas_installed_apps:
   - { id: 497799835, name: "Xcode (11.7)" }
