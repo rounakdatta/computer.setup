@@ -10,7 +10,7 @@ setup_prerequisites() {
     # install pip on arch linux
     if ! pip3 --version; then
         echo "installing pip3 through pacman"
-        sudo pacman -Syu python-pip
+        sudo pacman -S python-pip
     fi
 
     if ! ansible --version; then

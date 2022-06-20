@@ -4,7 +4,7 @@ roles:
 - name: rounakdatta.dotfiles
   src: https://github.com/rounakdatta/ansible-role-dotfiles.git
   version: origin/master
-- name: kewlfft.aur
 
 collections:
 - name: community.general
+- name: kewlfft.aur

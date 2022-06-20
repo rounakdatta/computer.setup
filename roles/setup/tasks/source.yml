@@ -50,120 +50,8 @@ vars:
       (.*)gopass_wrapper.sh(.*): "\n"
       (.*)manifest and weapper(.*): "Y"
 
-- name: set up buku database from git
-  block:
-    - name: check/create the buku configs directory
-      file:
-        path: "~/.local/share"
-        state: directory
-
-    - name: checkout the repository
-      git:
-        repo: git@gitlab.com:rounakdatta/buku.git
-        dest: "~/.local/share/buku"
-
 - name: set up rust & cargo
   shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
-
-- name: build and install bukubrow-host
-  vars:
-    bbh: bukubrow-host
-    platform: "{{ 'darwin-x64' if ansible_distribution == 'MacOSX' else 'linux-x64' }}"
-  block:
-    - name: create a temporary directory
-      command: mkdir -p ./tmp/
-      when: ansible_distribution == "MacOSX"
-
-    - name: check out the repository
-      git:
-        repo: https://github.com/samhh/bukubrow-host.git
-        dest: "./tmp/{{ bbh }}"
-      when: ansible_distribution == "MacOSX"
-
-    - name: build it
-      shell: source $HOME/.cargo/env && cargo build --release
-      args:
-        executable: /bin/bash
-        chdir: tmp/{{ bbh }}
-      ignore_errors: "{{ ansible_check_mode }}"
-      when: ansible_distribution == "MacOSX"
-
-    - name: move binary to PATH location
-      shell: mv bukubrow /usr/local/bin/bukubrow
-      args:
-        chdir: tmp/{{ bbh }}/target/release
-      ignore_errors: "{{ ansible_check_mode }}"
-      when: ansible_distribution == "MacOSX"
-
-    - name: install for required browsers
-      command: "bukubrow --install-{{ item }}"
-      with_items:
-        - chrome
-        - firefox
-      ignore_errors: "{{ ansible_check_mode }}"
-
-- name: set up buku backup script permissions
-  file: dest=~/cron/buku_backup.sh mode=a+x
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: start the daily buku backup service
-  shell: launchctl load ~/Library/LaunchAgents/backup.buku.plist
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: ansible_distribution == "MacOSX"
-
-- name: prepare the config for rclone backup service
-  vars:
-    Name: "{{ lookup('community.general.passwordstore', 'backblaze' + '/name', errors='ignore') }}"
-    Account: "{{ lookup('community.general.passwordstore', 'backblaze' + '/account', errors='ignore') }}"
-    Key: "{{ lookup('community.general.passwordstore', 'backblaze' + '/key', errors='ignore') }}"
-    Bucket: "{{ lookup('community.general.passwordstore', 'backblaze' + '/bucket', errors='ignore') }}"
-
-  block:
-    - name: Substitute the environment variables in rclone.conf
-      lineinfile:
-        dest: "~/.config/rclone/rclone.conf"
-        regexp: "{{ item.regex }}"
-        line: "{{ item.actual }}"
-      with_items:
-        - regex: "^\[.*$"
-          actual: "[{{ Name }}]"
-        - regex: "^account.*$"
-          actual: "account = {{ Account }}"
-        - regex: "^key.*$"
-          actual: "key = {{ Key }}"
-
-    - name: Get fully qualified host root path
-      shell: pwd
-        chdir: "~"
-      register: host_root_path
-
-    - name: Substitute the environment variables in syncrclone's config.py
-      lineinfile:
-        dest: "~/tooling/config.py"
-        regexp: "{{ item.regex }}"
-        line: "{{ item.actual }}"
-      with_items:
-        - regex: "^remoteA.*$"
-          actual: 'remoteA = "{{ host_root_path.stdout }}/files"'
-        - regex: "^remoteB.*$"
-          actual: 'remoteB = "{{ Name }}:{{ Bucket }}/"'
-
-    - name: Create a symlink for the rclone.conf file
-      file:
-        src: "~/.config/rclone/rclone.conf"
-        dest: "~/tooling/rclone.conf"
-        state: link
-
-- name: set up rclone backup script permissions
-  file:
-    path: "~/cron/rclone_backup.sh"
-    mode: a+x
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: start the daily rclone backup service
-  shell: launchctl load ~/Library/LaunchAgents/backup.rclone.plist
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: ansible_distribution == "MacOSX"
 
 - name: configure and start nextdns service
   vars:
@@ -213,26 +101,6 @@ vars:
       shell: pulseaudio -k
   when: ansible_distribution == "Archlinux"
 
-- name: set up kinto (macOS keybindings on Linux)
-  ignore_errors: True
-  block:
-    - name: check out the repository
-      git:
-        repo: https://github.com/rbreaves/kinto.git
-        dest: "/tmp/kinto"
-
-    - name: run the setup
-      shell: "./setup.py"
-      args:
-        chdir: /tmp/kinto
-        executable: /bin/bash
-
-    - name: run through the GUI
-      shell: "~/.config/kinto/gui/kinto-gui.py"
-      args:
-        executable: /bin/bash
-  when: ansible_distribution == "Archlinux"
-
 - name: start mysql server on macOS
   ignore_errors: True
   block:
@@ -243,3 +111,43 @@ vars:
     - name: start the service
       shell: mysql.server start
       become: True
+  when: ansible_distribution == "MacOSX"
+
+- name: Additional configurations to experience tmux on Linux
+  ignore_errors: True
+  block:
+    - name: generate aliases for copy/paste to be at par with macOS
+      ignore_errors: True
+      blockinfile:
+        dest: "~/.config/fish/config.fish"
+        marker: "# Linux specific aliases"
+        block: |
+          alias pbcopy="xsel --clipboard --input"
+          alias pbpaste="xsel --clipboard --output"
+
+    - name: enable the tmux system clipboard
+      ignore_errors: True
+      blockinfile:
+        dest: "~/.tmux.conf"
+        marker: "# Linux specific configuration"
+        block: |
+          setw -g set-clipboard on
+
+    - name: set the fish shell path correctly
+      ignore_errors: True
+      lineinfile:
+        dest: "~/.tmux.conf"
+        regexp: ".*default-shell.*$"
+        line: "set-option -g default-shell /usr/bin/fish"
+  when: ansible_distribution == "Archlinux"
+
+- name: Additional configuration to make pinentry program work on Linux
+  lineinfile:
+    dest: "~/.gnupg/gpg-agent.conf"
+    regexp: "^pinentry-program.*$"
+    state: absent
+  when: ansible_distribution == "Archlinux"
+
+- name: Refresh the font cache on Linux
+  shell: "fc-cache -vf"
+  when: ansible_distribution == "Archlinux"
