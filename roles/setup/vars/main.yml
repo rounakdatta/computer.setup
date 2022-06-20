@@ -184,7 +184,6 @@ arch_core_packages:
   - qutebrowser
   - docker
   - krita
-  - anki
   - openfortivpn
   - discord
   - signal-desktop
@@ -192,6 +191,13 @@ arch_core_packages:
   - zip
   - gobject-introspection
   - pulseaudio-bluetooth
+  - bluez
+  - tailscale
+  - noto-fonts-emoji
+  - gnome-keyring
+  - libsecret
+  - libgnome-keyring
+  - texlive-most
 
 arch_aur_packages:
   - pass-update
@@ -213,6 +219,7 @@ arch_aur_packages:
   - bukubrow
   - gopass-jsonapi-git
   - mermaid-cli
+  - texlive-latexindent-meta
 
 ssh_hosts:
   - personal
