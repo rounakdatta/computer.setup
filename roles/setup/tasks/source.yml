@@ -1,6 +1,8 @@
 ---
-vars:
-  fish_native_path: "{{ '/usr/local/bin/fish' if ansible_distribution == 'MacOSX' else '/usr/bin/fish' }}"
+
+- name: set fish binary location
+  set_fact:
+    fish_native_path: "{{ '/opt/homebrew/bin/fish' if ansible_distribution == 'MacOSX' else '/usr/bin/fish' }}"
 
 - name: make sure personal directory exists
   command: mkdir -p ~/personal/
@@ -20,25 +22,19 @@ vars:
 - name: set up gopass-jsonapi
   block:
     - name: create a temporary directory
-      command: mkdir -p ./tmp/
+      command: mkdir -p ./tmp/gopass-jsonapi
 
-    - name: checks out the repository
-      git:
-        repo: https://github.com/gopasspw/gopass-jsonapi.git
-        dest: "./tmp/gopass-jsonapi"
+    - name: download the package
+      get_url:
+        url: "https://github.com/gopasspw/gopass-jsonapi/releases/download/v1.14.3/gopass-jsonapi-1.14.3-darwin-arm64.tar.gz"
+        dest: "./tmp/gopass-jsonapi.tar.gz"
 
-    - name: build it
-      shell: make build
-      args:
-        executable: /bin/bash
-        chdir: tmp/gopass-jsonapi
-      ignore_errors: "{{ ansible_check_mode }}"
+    - name: extract the archive
+      command: "tar -xzf ./tmp/gopass-jsonapi.tar.gz --directory ./tmp/gopass-jsonapi/"
 
     - name: move binary to PATH location
-      shell: mv gopass-jsonapi /usr/local/bin/gopass-jsonapi
-      args:
-        chdir: tmp/gopass-jsonapi
-      ignore_errors: "{{ ansible_check_mode }}"
+      command: "mv ./tmp/gopass-jsonapi/gopass-jsonapi /usr/local/bin/gopass-jsonapi"
+      become: True
   when: ansible_distribution == "MacOSX"
 
 - name: configure gopass-jsonapi for chrome
@@ -140,6 +136,14 @@ vars:
         regexp: ".*default-shell.*$"
         line: "set-option -g default-shell /usr/bin/fish"
   when: ansible_distribution == "Archlinux"
+
+- name: Set the shell path correctly on MacOS
+  ignore_errors: True
+  lineinfile:
+    dest: "~/.tmux.conf"
+    regexp: ".*default-shell.*$"
+    line: "set-option -g default-shell /opt/homebrew/bin/fish"
+  when: ansible_distribution == "MacOSX"
 
 - name: Additional configuration to make pinentry program work on Linux
   lineinfile:

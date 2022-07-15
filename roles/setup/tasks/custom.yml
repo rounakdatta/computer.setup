@@ -1,13 +1,21 @@
 ---
+- name: make sure that the `tooling` directory exists
+  command: "mkdir -p ~/tooling"
+
+# TODO: fix the directory creation here
 - name: download and extract the archives
   ansible.builtin.unarchive:
     src: "{{ item.value.url }}"
     dest: "~/{{ item.value.directory }}/{{ item.value.name }}"
     remote_src: yes
-    with_dict: "{{ custom_archives }}"
+  with_dict: "{{ custom_archives }}"
 
-  - name: set up git repositories
-    git:
-      repo: "{{ item.value.repo }}"
-      dest: "~/{{ item.value.directory }}/{{ item.value.name }}"
-    with_dict: "{{ custom_repositories }}"
+- name: make sure that the `personal` directory exists
+  command: "mkdir -p ~/personal"
+
+# TODO: fix the directory creation here
+- name: set up git repositories
+  git:
+    repo: "{{ item.value.repo }}"
+    dest: "~/{{ item.value.directory }}/{{ item.value.name }}"
+  with_dict: "{{ custom_repositories }}"

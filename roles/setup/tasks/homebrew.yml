@@ -1,9 +1,23 @@
 ---
-# setup homebrew and open the taps
-- name: install homebrew
-  shell: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
+
+# apple silicon (m1) requires rosetta for backward compatibility
+- name: install rosetta
+  shell: '/usr/sbin/softwareupdate --install-rosetta --agree-to-license'
+
+# dummy node because homebrew installation requires it this way, I'm just being pragmatic here
+- name: try installing homebrew
+  shell: '/bin/bash -c "yes | $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
   args:
     creates: /usr/local/bin/brew
+  become: yes
+  ignore_errors: True
+
+# setup homebrew and open the taps
+- name: try installing homebrew again
+  shell: '/bin/bash -c "yes | $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
+  args:
+    creates: /usr/local/bin/brew
+  become: no
 
 - name: ensure homebrew is updated
   homebrew:

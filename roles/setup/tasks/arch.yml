@@ -7,7 +7,7 @@
   become: True
 
 # install AUR packages through yay
-- aur:
+- kewlfft.aur.aur:
     use: yay
     name: "{{ item }}"
     state: latest
