@@ -1,6 +1,10 @@
 ---
 # playbook for setting up a development mac
 - hosts: unix
+  vars_prompt:
+    - name: gpg_passphrase
+      prompt: "Please supply the gpg passphrase (required for importing the key)"
+      private: yes
   gather_facts: yes
   vars_files:
     - config.yml

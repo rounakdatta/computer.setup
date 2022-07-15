@@ -14,8 +14,15 @@
     - name: import public key
       shell: "gpg --import {{ public_key }}"
 
+    - name: get fully qualified path of private key
+      shell: "readlink -f {{ private_key }}"
+      register: private_key_fq_path
+
     - name: import private key
-      shell: "gpg --allow-secret-key-import --pinentry-mode loopback --import {{ private_key }}"
+      expect:
+        command: "gpg --allow-secret-key-import --pinentry-mode loopback --import {{ private_key_fq_path.stdout }}"
+        responses:
+          (.*)passphrase(.*): "{{ gpg_passphrase }}"
 
     - name: clone to local password-store from remote
       git:

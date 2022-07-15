@@ -8,8 +8,8 @@ homebrew_taps:
     tap_repo: "d12frosted/emacs-plus"
   passExtensions:
     tap_repo: "simplydanny/pass-extensions"
-  openjdk:
-    tap_repo: "AdoptOpenJDK/openjdk"
+  caskVersions:
+    tap_repo: "homebrew/cask-versions"
 
 homebrew_applications:
   - git
@@ -48,11 +48,14 @@ homebrew_applications:
   - librdkafka
   - maven
   - mermaid-cli
+  - unzip
+  - gnu-tar
 
 homebrew_cask_applications:
   - slack
-  - adoptopenjdk8
-  - adoptopenjdk11
+  - temurin8
+  - temurin11
+  - temurin17
   - google-chrome
   - firefox
   - microsoft-edge
@@ -80,7 +83,6 @@ homebrew_cask_applications:
   - hex-fiend
   - send-to-kindle
   - anki
-  - forticlient
   - microsoft-office
   - background-music
   - discord
@@ -91,35 +93,24 @@ homebrew_cask_applications:
   - calibre
   - signal
   - dbeaver-community
+  - qbittorrent
+  - unetbootin
+  - balenaetcher
+  - karabiner-elements
+  - gpg-suite
+  - nextcloud
 
-external_applications_dmg:
-  utorrent:
-    name: uTorrentWeb
-    url: https://utweb-assets.bittorrent.com/installer/uTorrentWeb.dmg
-  unetbootin:
-    name: unetbootin
-    url: https://github.com/unetbootin/unetbootin/releases/download/700/unetbootin-mac-700.dmg
-  karabiner_elements:
-    name: karabiner
-    url: https://github.com/pqrs-org/Karabiner-Elements/releases/download/v13.1.0/Karabiner-Elements-13.1.0.dmg
-  gpgtools:
-    name: gpgtools
-    url: https://releases.gpgtools.org/GPG_Suite-2020.2.dmg
+external_applications_dmg: {}
 
 external_applications_pkg:
   macports:
     name: macports
-    url: https://distfiles.macports.org/MacPorts/MacPorts-2.6.4-10.15-Catalina.pkg
+    url: https://github.com/macports/macports-base/releases/download/v2.7.2/MacPorts-2.7.2-12-Monterey.pkg
 
 pip_python_packages:
-  buku:
-    name: buku
-  buku_server:
-    name: buku[server]
-  airflow:
-    name: apache-airflow[celery]
-  airflow-livy-operators:
-    name: airflow-livy-operators
+  # pexpect is required for expect commands
+  pexpect:
+    name: pexpect
   pyhive:
     name: pyhive
   pyspark:
@@ -132,17 +123,11 @@ pip_python_packages:
     name: pandas
   numpy:
     name: numpy
-  PyGObject:
-    name: PyGObject
-  syncrclone:
-    name: git+https://github.com/Jwink3101/syncrclone
 
 mas_installed_apps:
-  - { id: 497799835, name: "Xcode (11.7)" }
   - { id: 490461369, name: "Bandwidth+ (1.18)" }
   - { id: 1254743014, name: "LyricsX (1.5.4)" }
-  - { id: 1476177064, name: "Reading Queue (1.2.1)" }
-  - { id: 1514817810, name: "Poolside FM (1.1.2)" }
+  - { id: 1475387142, name: "Tailscale (1.26.2)" }
 
 arch_core_packages:
   - git
@@ -198,6 +183,7 @@ arch_core_packages:
   - libsecret
   - libgnome-keyring
   - texlive-most
+  - nextcloud-client
 
 arch_aur_packages:
   - pass-update
@@ -233,25 +219,9 @@ ssh_hosts:
   - prod-bastion
   - hercules-emr
 
-custom_archives:
-  hadoop:
-    name: hadoop-2.5.1
-    directory: tooling
-    url: https://archive.apache.org/dist/hadoop/core/hadoop-2.5.1/hadoop-2.5.1.tar.gz
-  hive:
-    name: apache-hive-1.2.1-bin
-    directory: tooling
-    url: https://archive.apache.org/dist/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz
+custom_archives: {}
 
-custom_repositories:
-  public_wiki:
-    name: rounakdatta.github.io
-    directory: personal
-    repo: git@github.com:rounakdatta/rounakdatta.github.io.git
-  private_wiki:
-    name: rounakdatta.gitlab.io
-    directory: personal
-    repo: git@gitlab.com:rounakdatta/rounakdatta.gitlab.io.git
+custom_repositories: {}
 
 fisher_packages:
   - reitzig/sdkman-for-fish

@@ -9,5 +9,5 @@
   when: emacsroot.stat.exists == False
 
 - name: installs doom emacs
-  command: ~/.emacs.d/bin/doom -y install
+  shell: "yes | ~/.emacs.d/bin/doom install"
   when: emacsroot.stat.exists == False
