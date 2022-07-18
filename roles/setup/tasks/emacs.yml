@@ -1,4 +1,9 @@
 ---
+# links the already-installed emacs on macOS
+- name: links emacs to macOS Applications directory
+  shell: "ln -Fs /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications"
+  when: ansible_distribution == "MacOSX"
+
 # sets up doom emacs
 - name: checks if ~/.emacs.d is already present
   stat: path=~/.emacs.d

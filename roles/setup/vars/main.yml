@@ -50,6 +50,7 @@ homebrew_applications:
   - mermaid-cli
   - unzip
   - gnu-tar
+  - bluesnooze
 
 homebrew_cask_applications:
   - slack
