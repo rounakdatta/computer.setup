@@ -209,16 +209,8 @@ arch_aur_packages:
   - texlive-latexindent-meta
 
 ssh_hosts:
-  - personal
-  - dev-hadoop-edge
-  - prod-hadoop-edge
-  - datanode
-  - prod-c3
-  - load-c3
-  - load-broker
-  - load-hadoop-edge
-  - prod-bastion
-  - hercules-emr
+  - latitude
+  - rpi8g
 
 custom_archives: {}
 
